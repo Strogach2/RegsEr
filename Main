@@ -28,6 +28,24 @@ for ind, item in pairs(Desc) do
 
 		STR1.Parent = Lab1
 		STR1.Thickness = 6
+
+for _, player in pairs(Players:GetPlayers()) do
+        if player.Character then
+            local esp = player.Character:FindFirstChild("ESP")
+            if state then
+                if not esp then
+                    esp = Instance.new("Highlight")
+                    esp.Name = "ESP"
+                    esp.FillColor = Color3.fromRGB(255, 0, 0)
+                    esp.OutlineColor = Color3.fromRGB(0, 255, 0)
+                    esp.OutlineTransparency = 0.5
+                    esp.Parent = player.Character
+                end
+            elseif esp then
+                esp:Destroy()
+            end
+        end
+    end
         end
 end
 
