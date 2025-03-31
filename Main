@@ -34,26 +34,40 @@ for ind, item in pairs(Desc) do
 		STR1.Thickness = 6
 
 		if Plg then
-			local SCGUI = Instance.new("ScreenGui")
-			local TLABEL = Instance.new("TextLabel")
-			local UISTR = Instance.new("UIStroke")
+			local SCG = Plg:FindFirstChild("SCGUI")
+			
+			if SCG then
+				local TLB = SCG:FindFirstChild("TLABEL")
 
-			SCGUI.Parent = Plg
-
-			TLABEL.Parent = SCGUI
-			TLABEL.Position = UDim2.new(0.019, 0,0.439, 0)
-			TLABEL.Size = UDim2.new(0, 200,0, 75)
-
-			TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
-			TLABEL.Text = "ITEMS: "..{ind}
-			TLABEL.TextSize = 45
-
-			UISTR.Parent = TLABEL
-			UISTR.AppleStrokeMode = Enum.ApplyStrokeMode.Border
-			UISTR.LineJoinMode = Enum.LineJoinMode.Miter
-			UISTR.Thickness = 5
+				if TLB then
+					TLB.Text = "ITEMS: "..ind
+				end
+			end
 		end
     end
 end
 end)
 
+local SCGUI = Instance.new("ScreenGui")
+local TLABEL = Instance.new("TextLabel")
+local UISTR = Instance.new("UIStroke")
+
+SCGUI.Parent = Plg
+SCGUI.Name = "SCGUI"
+
+TLABEL.Parent = SCGUI
+TLABEL.Name = "TLABEL"
+
+TLABEL.Position = UDim2.new(0.019, 0,0.439, 0)
+TLABEL.Size = UDim2.new(0, 200,0, 75)
+
+TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
+TLABEL.Text = "ITEMS: "..{ind}
+TLABEL.TextSize = 45
+
+UISTR.Parent = TLABEL
+UISTR.Name = "UISTR"
+
+UISTR.AppleStrokeMode = Enum.ApplyStrokeMode.Border
+UISTR.LineJoinMode = Enum.LineJoinMode.Miter
+UISTR.Thickness = 5
