@@ -10,6 +10,8 @@ local Chr = Plr.Character or Plr.CharacterAdded:Wait()
 
 local HRP = Chr:FindFirstChild("HumanoidRootPart")
 
+local Plg = Plr:FindFirstChild("PlayerGui")
+
 RunService.RenderStepped:Connect(function()
 for ind, item in pairs(Desc) do
 	if item:IsA("Model") then
@@ -31,6 +33,27 @@ for ind, item in pairs(Desc) do
 		STR1.Parent = Lab1
 		STR1.Thickness = 6
 
-        end
+		if Plg then
+			local SCGUI = Instance.new("ScreenGui")
+			local TLABEL = Instance.new("TextLabel")
+			local UISTR = Instance.new("UIStroke")
+
+			SCGUI.Parent = Plg
+
+			TLABEL.Parent = SCGUI
+			TLABEL.Position = UDim2.new(0.019, 0,0.439, 0)
+			TLABEL.Size = UDim2.new(0, 200,0, 75)
+
+			TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
+			TLABEL.Text = "ITEMS: "..{ind}
+			TLABEL.TextSize = 45
+
+			UISTR.Parent = TLABEL
+			UISTR.AppleStrokeMode = "Border"
+			UISTR.LineJoinMode = "Miter"
+			UISTR.Thickness = 5
+		end
+    end
 end
 end)
+
