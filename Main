@@ -47,7 +47,7 @@ local function createBillboard(name, offset)
     label.Size = UDim2.new(1, 0, 1, 0)
     label.BackgroundTransparency = 1
     label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    label.TextScaled = true
+    label.TextSize = 30
 
     local stroke = Instance.new("UIStroke")
     stroke.Parent = label
@@ -65,27 +65,22 @@ RunService.RenderStepped:Connect(function()
     local Desc = Fold2:GetChildren()
     for _, item in pairs(Desc) do
         if item:IsA("Model") and item.PrimaryPart then
-            local distance = math.floor((HRP.Position - item.PrimaryPart.Position).magnitude)
             local BG1 = item:FindFirstChild("ItemLabel")
-            local BG2 = item:FindFirstChild("DistanceLabel")
             if not BG1 then
                 BG1, label1 = createBillboard("ItemLabel")
                 BG1.Parent = item.PrimaryPart
                 BG1.Adornee = item.PrimaryPart
                 label1.Text = (item:FindFirstChild("ProximityPrompt") and item.ProximityPrompt.ObjectText or "Unknown")
+
             end
-            if not BG2 or not BG2:IsDescendantOf(item.PrimaryPart) then
-                if BG2 then BG2:Destroy() end
-                BG2, label2 = createBillboard("DistanceLabel", Vector3.new(0, 2, 0))
-                BG2.Parent = item.PrimaryPart
-                BG2.Adornee = item.PrimaryPart
-                label2.Text = tostring(distance)
-            else
-                local label2 = BG2:FindFirstChildOfClass("TextLabel")
-                if label2 then
-                    label2.Text = tostring(distance)
-                end
-            end
+
+            local HL = Instance.new("Highlight")
+            HL.Parent = item.PrimaryPart
+
+            HL.DepthMode = Enum.DepthMode.AlwaysOnTop
+            HL.FillColor = Color3.fromRGB(0, 255, 0)
+            HL.FillTransparency = 0.5
+            HL.OutlineTransparency = 1
         end
     end
     TLABEL.Text = "ITEMS: "..tostring(#Desc)
