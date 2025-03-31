@@ -74,7 +74,8 @@ RunService.RenderStepped:Connect(function()
                 BG1.Adornee = item.PrimaryPart
                 label1.Text = (item:FindFirstChild("ProximityPrompt") and item.ProximityPrompt.ObjectText or "Unknown")
             end
-            if not BG2 then
+            if not BG2 or not BG2:IsDescendantOf(item.PrimaryPart) then
+                if BG2 then BG2:Destroy() end
                 BG2, label2 = createBillboard("DistanceLabel", Vector3.new(0, 2, 0))
                 BG2.Parent = item.PrimaryPart
                 BG2.Adornee = item.PrimaryPart
