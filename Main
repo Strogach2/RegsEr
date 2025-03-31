@@ -49,8 +49,8 @@ for ind, item in pairs(Desc) do
 			TLABEL.TextSize = 45
 
 			UISTR.Parent = TLABEL
-			UISTR.AppleStrokeMode = "Border"
-			UISTR.LineJoinMode = "Miter"
+			UISTR.AppleStrokeMode = Enum.ApplyStrokeMode.Border
+			UISTR.LineJoinMode = Enum.LineJoinMode.Miter
 			UISTR.Thickness = 5
 		end
     end
