@@ -1,9 +1,6 @@
 local Fold1 = workspace:FindFirstChild("Item_Spawns")
 local Fold2 = Fold1:FindFirstChild("Items")
 
-local Plrs = game:GetService("Players")
-local Plr = Plrs.LocalPlayer
-
 local Desc = Fold2:GetChildren()
 
 for ind, item in pairs(Desc) do
@@ -25,34 +22,6 @@ for ind, item in pairs(Desc) do
 
 		STR.Parent = Lab
 		STR.Thickness = 6
-
-		local Plg = Plr:FindFirstChild("PlayerGui")
-
-		local HudGui = Instance.new("ScreenGui")
-		HudGui.Name = "HudGui"
-		HudGui.Parent = Plg
-
-		local TextLabel = Instance.new("TextLabel")
-		TextLabel.Name = "Count"
-		TextLabel.Parent = HudGui
-
-		TextLabel.Position = UDim2.new(0.024, 0,0.423, 0)
-		TextLabel.Size = UDim2.new(0,200,0,75)
-                TextLabel.BackgroundColor3 = Color3.fromRGB(55,55,55)
-
-		TextLabel.Text = "ITEMS: "..{ind}
-		TextLabel.TextScaled = false
-		TextLabel.TextSize = 44
-
-		local UIC = Instance.new("UICorner")
-		UIC.Parent = TextLabel
-		UIC.CornerRadius = UDim.new(0.2, 0)
-
-		local UIS = Instance.new("UIStroke")
-		UIS.Parent = TextLabel
-		UIS.ApplyStrokeMode = "Border"
-		UIS.Color = Color3.fromRGB(35,35,35)
-		UIS.Thickness = 3
-	end
+        end
 end
 
