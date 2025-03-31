@@ -15,10 +15,6 @@ for ind, item in pairs(Desc) do
 		local Lab1 = Instance.new("TextLabel")
 		local STR1 = Instance.new("UIStroke")
 
-        local BG2 = Instance.new("BillboardGui")
-		local Lab2 = Instance.new("TextLabel")
-		local STR2 = Instance.new("UIStroke")
-
 		BG1.Parent = item.PrimaryPart
 		BG1.AlwaysOnTop = true
 		BG1.Size = UDim2.new(0, 250, 0, 250)
@@ -32,23 +28,6 @@ for ind, item in pairs(Desc) do
 
 		STR1.Parent = Lab1
 		STR1.Thickness = 6
-
-		BG2.Parent = item.PrimaryPart
-		BG2.AlwaysOnTop = true
-		BG2.Size = UDim2.new(0, 250, 0, 250)
-		BG2.StudsOffset = Vector3.new(0, 2, 0)
-
-		Lab2.Parent = BG2
-		Lab2.Size = UDim2.new(1, 0, 1, 0)
-		Lab2.BackgroundTransparency = 1
-		Lab2.TextColor3 = Color3.fromRGB(0, 255, 0)
-		HumanoidRootPart.Changed:Connect(function()
-			Lab2.Text = (HRP.Position - item.PrimaryPart.Position).Magnitude
-		end)
-		Lab2.TextScaled = true
-
-		STR2.Parent = Lab2
-		STR2.Thickness = 4
         end
 end
 
