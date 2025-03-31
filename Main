@@ -23,7 +23,7 @@ local function createLabelGui()
     TLABEL.Position = UDim2.new(0.019, 0, 0.439, 0)
     TLABEL.Size = UDim2.new(0, 200, 0, 75)
     TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
-    TLABEL.TextSize = 45
+    TLABEL.TextSize = 25
     TLABEL.TextColor3 = Color3.fromRGB(255, 255, 255)
     TLABEL.Text = "ITEMS: 0"
 
@@ -65,22 +65,27 @@ RunService.RenderStepped:Connect(function()
     local Desc = Fold2:GetChildren()
     for _, item in pairs(Desc) do
         if item:IsA("Model") and item.PrimaryPart then
+       
             local BG1 = item:FindFirstChild("ItemLabel")
             if not BG1 then
                 BG1, label1 = createBillboard("ItemLabel")
                 BG1.Parent = item.PrimaryPart
                 BG1.Adornee = item.PrimaryPart
                 label1.Text = (item:FindFirstChild("ProximityPrompt") and item.ProximityPrompt.ObjectText or "Unknown")
-
             end
 
-            local HL = Instance.new("Highlight")
-            HL.Parent = item.PrimaryPart
+          
+            local HL = item:FindFirstChild("ItemHighlight")
+            if not HL then
+                HL = Instance.new("Highlight")
+                HL.Name = "ItemHighlight"
+                HL.Parent = item.PrimaryPart
 
-            HL.DepthMode = Enum.DepthMode.AlwaysOnTop
-            HL.FillColor = Color3.fromRGB(0, 255, 0)
-            HL.FillTransparency = 0.5
-            HL.OutlineTransparency = 1
+                HL.DepthMode = Enum.DepthMode.AlwaysOnTop
+                HL.FillColor = Color3.fromRGB(0, 255, 0)  
+                HL.FillTransparency = 0.5
+                HL.OutlineTransparency = 1
+            end
         end
     end
     TLABEL.Text = "ITEMS: "..tostring(#Desc)
