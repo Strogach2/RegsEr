@@ -43,7 +43,7 @@ for ind, item in pairs(Desc) do
 		Lab2.BackgroundTransparency = 1
 		Lab2.TextColor3 = Color3.fromRGB(0, 255, 0)
 		HumanoidRootPart.Changed:Connect(function()
-			Lab2.Text = HRP.Position - item.PrimaryPart.Position
+			Lab2.Text = (HRP.Position - item.PrimaryPart.Position).Magnitude
 		end)
 		Lab2.TextScaled = true
 
