@@ -20,7 +20,7 @@ local function createLabelGui()
 
     TLABEL.Name = "TLABEL"
     TLABEL.Parent = SCGUI
-    TLABEL.Position = UDim2.new(0.019, 0, 0.439, 0)
+    TLABEL.Position = UDim2.new(0.019, 0, 0.300, 0)
     TLABEL.Size = UDim2.new(0, 200, 0, 75)
     TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
     TLABEL.TextSize = 25
