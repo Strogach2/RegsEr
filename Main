@@ -1,0 +1,26 @@
+local Fold1 = workspace:FindFirstChild("Item_Spawns")
+local Fold2 = Fold1:FindFirstChild("Items")
+
+local Desc = Fold2:GetChildren()
+
+for ind, item in pairs(Desc) do
+	if item:IsA("Model") then
+		local BG = Instance.new("BillboardGui")
+		local Lab = Instance.new("TextLabel")
+		local STR = Instance.new("UIStroke")
+
+		BG.Parent = item.PrimaryPart
+		BG.AlwaysOnTop = true
+		BG.Size = UDim2.new(0, 250, 0, 250)
+
+		Lab.Parent = BG
+		Lab.Size = UDim2.new(1, 0, 1, 0)
+		Lab.BackgroundTransparency = 1
+		Lab.TextColor3 = Color3.fromRGB(255,255,255)
+		Lab.Text = item:WaitForChild("ProximityPrompt").ObjectText
+		Lab.TextScaled = true
+
+		STR.Parent = Lab
+		STR.Thickness = 6
+	end
+end
