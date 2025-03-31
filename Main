@@ -1,4 +1,5 @@
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 local Fold1 = workspace:FindFirstChild("Item_Spawns")
 local Fold2 = Fold1:FindFirstChild("Items")
@@ -9,6 +10,7 @@ local Chr = Plr.Character or Plr.CharacterAdded:Wait()
 
 local HRP = Chr:FindFirstChild("HumanoidRootPart")
 
+RunService.RenderStepped:Connect(function()
 for ind, item in pairs(Desc) do
 	if item:IsA("Model") then
 		local BG1 = Instance.new("BillboardGui")
@@ -31,4 +33,4 @@ for ind, item in pairs(Desc) do
 
         end
 end
-
+end)
