@@ -2,73 +2,62 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local Fold1 = workspace:FindFirstChild("Item_Spawns")
-local Fold2 = Fold1:FindFirstChild("Items")
+local Fold2 = Fold1 and Fold1:FindFirstChild("Items")
 
-local Desc = Fold2:GetChildren()
 local Plr = Players.LocalPlayer
 local Chr = Plr.Character or Plr.CharacterAdded:Wait()
 
-local HRP = Chr:FindFirstChild("HumanoidRootPart")
-
 local Plg = Plr:FindFirstChild("PlayerGui")
 
+local function createLabelGui()
+    local SCGUI = Instance.new("ScreenGui")
+    local TLABEL = Instance.new("TextLabel")
+    local UISTR = Instance.new("UIStroke")
+
+    SCGUI.Name = "SCGUI"
+    SCGUI.Parent = Plg
+
+    TLABEL.Name = "TLABEL"
+    TLABEL.Parent = SCGUI
+    TLABEL.Position = UDim2.new(0.019, 0, 0.439, 0)
+    TLABEL.Size = UDim2.new(0, 200, 0, 75)
+    TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
+    TLABEL.TextSize = 45
+
+    UISTR.Parent = TLABEL
+    UISTR.Thickness = 5
+    UISTR.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    UISTR.LineJoinMode = Enum.LineJoinMode.Miter
+
+    return TLABEL
+end
+
+local TLABEL = Plg:FindFirstChild("SCGUI") and Plg.SCGUI:FindFirstChild("TLABEL") or createLabelGui()
+
 RunService.RenderStepped:Connect(function()
-for ind, item in pairs(Desc) do
-	if item:IsA("Model") then
-		local BG1 = Instance.new("BillboardGui")
-		local Lab1 = Instance.new("TextLabel")
-		local STR1 = Instance.new("UIStroke")
+    if not Fold2 then return end
+    local Desc = Fold2:GetChildren()
+    for ind, item in pairs(Desc) do
+        if item:IsA("Model") and not item:FindFirstChild("ItemLabel") then
+            local BG1 = Instance.new("BillboardGui")
+            local Lab1 = Instance.new("TextLabel")
+            local STR1 = Instance.new("UIStroke")
 
-		BG1.Parent = item.PrimaryPart
-		BG1.AlwaysOnTop = true
-		BG1.Size = UDim2.new(0, 150, 0, 150)
+            BG1.Name = "ItemLabel"
+            BG1.Parent = item.PrimaryPart
+            BG1.AlwaysOnTop = true
+            BG1.Size = UDim2.new(0, 150, 0, 150)
 
-		Lab1.Parent = BG1
-		Lab1.Size = UDim2.new(1, 0, 1, 0)
-		Lab1.BackgroundTransparency = 1
-		Lab1.TextColor3 = Color3.fromRGB(255,255,255)
-		Lab1.Text = item:WaitForChild("ProximityPrompt").ObjectText
-		Lab1.TextScaled = true
+            Lab1.Parent = BG1
+            Lab1.Size = UDim2.new(1, 0, 1, 0)
+            Lab1.BackgroundTransparency = 1
+            Lab1.TextColor3 = Color3.fromRGB(255, 255, 255)
+            Lab1.Text = item:FindFirstChild("ProximityPrompt") and item.ProximityPrompt.ObjectText or "Unknown"
+            Lab1.TextScaled = true
 
-		STR1.Parent = Lab1
-		STR1.Thickness = 6
-
-		if Plg then
-			local SCG = Plg:FindFirstChild("SCGUI")
-			
-			if SCG then
-				local TLB = SCG:FindFirstChild("TLABEL")
-
-				if TLB then
-					TLB.Text = "ITEMS: "..ind
-				end
-			end
-		end
+            STR1.Parent = Lab1
+            STR1.Thickness = 6
+        end
     end
-end
+    TLABEL.Text = "ITEMS: "..#Desc
 end)
-
-if Plg then
-local SCGUI = Instance.new("ScreenGui")
-local TLABEL = Instance.new("TextLabel")
-local UISTR = Instance.new("UIStroke")
-
-SCGUI.Parent = Plg
-SCGUI.Name = "SCGUI"
-
-TLABEL.Parent = SCGUI
-TLABEL.Name = "TLABEL"
-
-TLABEL.Position = UDim2.new(0.019, 0,0.439, 0)
-TLABEL.Size = UDim2.new(0, 200,0, 75)
-
-TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
-TLABEL.TextSize = 45
-
-UISTR.Parent = TLABEL
-UISTR.Name = "UISTR"
-
-UISTR.AppleStrokeMode = Enum.ApplyStrokeMode.Border
-UISTR.LineJoinMode = Enum.LineJoinMode.Miter
-UISTR.Thickness = 5
-end
