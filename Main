@@ -23,11 +23,14 @@ local function createLabelGui()
     TLABEL.Size = UDim2.new(0, 200, 0, 75)
     TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
     TLABEL.TextSize = 45
+    TLABEL.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TLABEL.Text = "ITEMS: 0"
 
     UISTR.Parent = TLABEL
     UISTR.Thickness = 5
     UISTR.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     UISTR.LineJoinMode = Enum.LineJoinMode.Miter
+    UISTR.Color = Color3.fromRGB(0, 0, 0)
 
     return TLABEL
 end
@@ -47,6 +50,7 @@ RunService.RenderStepped:Connect(function()
             BG1.Parent = item.PrimaryPart
             BG1.AlwaysOnTop = true
             BG1.Size = UDim2.new(0, 150, 0, 150)
+            BG1.Adornee = item.PrimaryPart
 
             Lab1.Parent = BG1
             Lab1.Size = UDim2.new(1, 0, 1, 0)
@@ -57,7 +61,8 @@ RunService.RenderStepped:Connect(function()
 
             STR1.Parent = Lab1
             STR1.Thickness = 6
+            STR1.Color = Color3.fromRGB(0, 0, 0)
         end
     end
-    TLABEL.Text = "ITEMS: "..#Desc
+    TLABEL.Text = "ITEMS: "..tostring(#Desc)
 end)
