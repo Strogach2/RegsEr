@@ -6,6 +6,7 @@ local Fold2 = Fold1 and Fold1:FindFirstChild("Items")
 
 local Plr = Players.LocalPlayer
 local Chr = Plr.Character or Plr.CharacterAdded:Wait()
+local HRP = Chr:FindFirstChild("HumanoidRootPart")
 
 local Plg = Plr:FindFirstChild("PlayerGui")
 
@@ -38,30 +39,64 @@ end
 local TLABEL = Plg:FindFirstChild("SCGUI") and Plg.SCGUI:FindFirstChild("TLABEL") or createLabelGui()
 
 RunService.RenderStepped:Connect(function()
-    if not Fold2 then return end
+    if not Fold2 or not HRP then return end
     local Desc = Fold2:GetChildren()
     for ind, item in pairs(Desc) do
-        if item:IsA("Model") and not item:FindFirstChild("ItemLabel") then
-            local BG1 = Instance.new("BillboardGui")
-            local Lab1 = Instance.new("TextLabel")
-            local STR1 = Instance.new("UIStroke")
+        if item:IsA("Model") then
+            local distance = math.floor((HRP.Position - item.PrimaryPart.Position).magnitude)
+            local BG1 = item:FindFirstChild("ItemLabel")
+            local BG2 = item:FindFirstChild("DistanceLabel")
+            if not BG1 then
+                BG1 = Instance.new("BillboardGui")
+                local Lab1 = Instance.new("TextLabel")
+                local STR1 = Instance.new("UIStroke")
 
-            BG1.Name = "ItemLabel"
-            BG1.Parent = item.PrimaryPart
-            BG1.AlwaysOnTop = true
-            BG1.Size = UDim2.new(0, 150, 0, 150)
-            BG1.Adornee = item.PrimaryPart
+                BG1.Name = "ItemLabel"
+                BG1.Parent = item.PrimaryPart
+                BG1.AlwaysOnTop = true
+                BG1.Size = UDim2.new(0, 150, 0, 150)
+                BG1.Adornee = item.PrimaryPart
 
-            Lab1.Parent = BG1
-            Lab1.Size = UDim2.new(1, 0, 1, 0)
-            Lab1.BackgroundTransparency = 1
-            Lab1.TextColor3 = Color3.fromRGB(255, 255, 255)
-            Lab1.Text = item:FindFirstChild("ProximityPrompt") and item.ProximityPrompt.ObjectText or "Unknown"
-            Lab1.TextSize = 45
+                Lab1.Parent = BG1
+                Lab1.Size = UDim2.new(1, 0, 1, 0)
+                Lab1.BackgroundTransparency = 1
+                Lab1.TextColor3 = Color3.fromRGB(255, 255, 255)
+                Lab1.TextScaled = true
 
-            STR1.Parent = Lab1
-            STR1.Thickness = 6
-            STR1.Color = Color3.fromRGB(0, 0, 0)
+                STR1.Parent = Lab1
+                STR1.Thickness = 6
+                STR1.Color = Color3.fromRGB(0, 0, 0)
+            end
+            if not BG2 then
+                BG2 = Instance.new("BillboardGui")
+                local Lab2 = Instance.new("TextLabel")
+                local STR2 = Instance.new("UIStroke")
+
+                BG2.Name = "DistanceLabel"
+                BG2.Parent = item.PrimaryPart
+                BG2.AlwaysOnTop = true
+                BG2.Size = UDim2.new(0, 150, 0, 150)
+                BG2.Adornee = item.PrimaryPart
+                BG2.StudsOffset = Vector3.new(0, 2, 0)
+
+                Lab2.Parent = BG2
+                Lab2.Size = UDim2.new(1, 0, 1, 0)
+                Lab2.BackgroundTransparency = 1
+                Lab2.TextColor3 = Color3.fromRGB(255, 255, 255)
+                Lab2.TextScaled = true
+
+                STR2.Parent = Lab2
+                STR2.Thickness = 6
+                STR2.Color = Color3.fromRGB(0, 0, 0)
+            end
+            local label1 = BG1:FindFirstChildOfClass("TextLabel")
+            if label1 then
+                label1.Text = (item:FindFirstChild("ProximityPrompt") and item.ProximityPrompt.ObjectText or "Unknown")
+            end
+            local label2 = BG2:FindFirstChildOfClass("TextLabel")
+            if label2 then
+                label2.Text = "Distance: "..distance.." studs"
+            end
         end
     end
     TLABEL.Text = "ITEMS: "..tostring(#Desc)
