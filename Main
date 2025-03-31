@@ -2,91 +2,29 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local Fold1 = workspace:FindFirstChild("Item_Spawns")
-local Fold2 = Fold1 and Fold1:FindFirstChild("Items")
+local Fold2 = Fold1:FindFirstChild("Items")
 
-local Plr = Players.LocalPlayer
-local Chr = Plr.Character or Plr.CharacterAdded:Wait()
-local HRP = Chr:WaitForChild("HumanoidRootPart")
-
-local Plg = Plr:FindFirstChild("PlayerGui")
-
-local function createLabelGui()
-    local SCGUI = Instance.new("ScreenGui")
-    local TLABEL = Instance.new("TextLabel")
-    local UISTR = Instance.new("UIStroke")
-
-    SCGUI.Name = "SCGUI"
-    SCGUI.Parent = Plg
-
-    TLABEL.Name = "TLABEL"
-    TLABEL.Parent = SCGUI
-    TLABEL.Position = UDim2.new(0.019, 0, 0.300, 0)
-    TLABEL.Size = UDim2.new(0, 200, 0, 75)
-    TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
-    TLABEL.TextSize = 25
-    TLABEL.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TLABEL.Text = "ITEMS: 0"
-
-    UISTR.Parent = TLABEL
-    UISTR.Thickness = 2
-    UISTR.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    UISTR.LineJoinMode = Enum.LineJoinMode.Miter
-    UISTR.Color = Color3.fromRGB(0, 0, 0)
-
-    return TLABEL
-end
-
-local function createBillboard(name, offset)
-    local billboard = Instance.new("BillboardGui")
-    billboard.Name = name
-    billboard.AlwaysOnTop = true
-    billboard.Size = UDim2.new(0, 150, 0, 150)
-    billboard.StudsOffset = offset or Vector3.new(0, 0, 0)
-
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, 0, 1, 0)
-    label.BackgroundTransparency = 1
-    label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    label.TextSize = 30
-
-    local stroke = Instance.new("UIStroke")
-    stroke.Parent = label
-    stroke.Thickness = 2
-    stroke.Color = Color3.fromRGB(0, 0, 0)
-
-    label.Parent = billboard
-    return billboard, label
-end
-
-local TLABEL = Plg:FindFirstChild("SCGUI") and Plg.SCGUI:FindFirstChild("TLABEL") or createLabelGui()
+local Desc = Fold2:GetChildren()
 
 RunService.RenderStepped:Connect(function()
-    if not Fold2 or not HRP then return end
-    local Desc = Fold2:GetChildren()
-    for _, item in pairs(Desc) do
-        if item:IsA("Model") and item.PrimaryPart then
-       
-            local BG1 = item:FindFirstChild("ItemLabel")
-            if not BG1 then
-                BG1, label1 = createBillboard("ItemLabel")
-                BG1.Parent = item.PrimaryPart
-                BG1.Adornee = item.PrimaryPart
-                label1.Text = (item:FindFirstChild("ProximityPrompt") and item.ProximityPrompt.ObjectText or "Unknown")
-            end
+for ind, item in pairs(Desc) do
+	if item:IsA("Model") then
+		local BG1 = Instance.new("BillboardGui")
+		local Lab1 = Instance.new("TextLabel")
+		local STR1 = Instance.new("UIStroke")
 
-          
-            local HL = item:FindFirstChild("ItemHighlight")
-            if not HL then
-                HL = Instance.new("Highlight")
-                HL.Name = "ItemHighlight"
-                HL.Parent = item.PrimaryPart
+		BG1.Parent = item.PrimaryPart
+		BG1.AlwaysOnTop = true
+		BG1.Size = UDim2.new(0, 150, 0, 150)
 
-                HL.DepthMode = Enum.DepthMode.AlwaysOnTop
-                HL.FillColor = Color3.fromRGB(0, 255, 0)  
-                HL.FillTransparency = 0.5
-                HL.OutlineTransparency = 1
-            end
-        end
+		Lab1.Parent = BG1
+		Lab1.Size = UDim2.new(1, 0, 1, 0)
+		Lab1.BackgroundTransparency = 1
+		Lab1.TextColor3 = Color3.fromRGB(255,255,255)
+		Lab1.Text = item:WaitForChild("ProximityPrompt").ObjectText
+		Lab1.TextScaled = true
+
+		STR1.Parent = Lab1
+		STR1.Thickness = 6
     end
-    TLABEL.Text = "ITEMS: "..tostring(#Desc)
-end)
+end
