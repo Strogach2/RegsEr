@@ -57,7 +57,7 @@ RunService.RenderStepped:Connect(function()
             Lab1.BackgroundTransparency = 1
             Lab1.TextColor3 = Color3.fromRGB(255, 255, 255)
             Lab1.Text = item:FindFirstChild("ProximityPrompt") and item.ProximityPrompt.ObjectText or "Unknown"
-            Lab1.TextScaled = true
+            Lab1.TextSize = 45
 
             STR1.Parent = Lab1
             STR1.Thickness = 6
