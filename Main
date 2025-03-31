@@ -48,6 +48,7 @@ for ind, item in pairs(Desc) do
 end
 end)
 
+if Plg then
 local SCGUI = Instance.new("ScreenGui")
 local TLABEL = Instance.new("TextLabel")
 local UISTR = Instance.new("UIStroke")
@@ -62,7 +63,6 @@ TLABEL.Position = UDim2.new(0.019, 0,0.439, 0)
 TLABEL.Size = UDim2.new(0, 200,0, 75)
 
 TLABEL.BackgroundColor3 = Color3.fromRGB(94, 94, 94)
-TLABEL.Text = "ITEMS: "..{ind}
 TLABEL.TextSize = 45
 
 UISTR.Parent = TLABEL
@@ -71,3 +71,4 @@ UISTR.Name = "UISTR"
 UISTR.AppleStrokeMode = Enum.ApplyStrokeMode.Border
 UISTR.LineJoinMode = Enum.LineJoinMode.Miter
 UISTR.Thickness = 5
+end
